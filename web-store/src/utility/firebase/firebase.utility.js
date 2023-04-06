@@ -7,8 +7,10 @@ import {
   signInWithRedirect,
   signInWithPopup,
   GoogleAuthProvider,
+  signOut,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  onAuthStateChanged,
 } from 'firebase/auth';
 import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore';
 
@@ -35,7 +37,7 @@ googleProvider.setCustomParameters({
   prompt: 'select_account',
 });
 
-export const auth = getAuth(firebaseApp);
+export const auth = getAuth();
 export const signInWithGooglePopup = function () {
   return signInWithPopup(auth, googleProvider);
 };
@@ -52,11 +54,10 @@ export const createUserDocumentFromAuth = async function (
   if (!userAuth) return;
 
   const userDocRef = doc(db, 'users', userAuth.uid);
-  console.log(userDocRef);
 
   const userSnapshot = await getDoc(userDocRef);
-  console.log(userSnapshot);
-  console.log(userSnapshot.exists());
+  // console.log(userSnapshot);
+  // console.log(userSnapshot.exists());
 
   //If userSnapshot does not exist
   if (!userSnapshot.exists()) {
@@ -68,7 +69,7 @@ export const createUserDocumentFromAuth = async function (
         displayName,
         email,
         createdAt,
-        ...(additionalInfo = {}),
+        ...additionalInfo,
       });
     } catch (error) {
       console.log('error creating user', error.message);
@@ -82,14 +83,22 @@ export const createAuthUserWithEmailandPassword = async function (
   email,
   password
 ) {
-  if (!email | !password) return;
-  return await createAuthUserWithEmailandPassword(auth, email, password);
+  if (!email || !password) return;
+  return await createUserWithEmailandPassword(auth, email, password);
 };
 
 export const signInAuthUserWithEmailandPassword = async function (
   email,
   password
 ) {
-  if (!email | !password) return;
-  return await signInAuthUserWithEmailandPassword(auth, email, password);
+  if (!email || !password) return;
+  return await signInUserWithEmailandPassword(auth, email, password);
+};
+
+export const signOutUser = async function () {
+  await signOut(auth);
+};
+
+export const onAuthStateChangedListener = function (callback) {
+  return onAuthStateChanged(auth, callback);
 };

@@ -1,5 +1,7 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import FormInput from '../form-input/form-input.component';
+
+import { UserContext } from '../../contexts/user.context';
 import {
   signInWithGooglePopup,
   createUserDocumentFromAuth,
@@ -16,7 +18,8 @@ const defaultFormFields = {
 const SignInForm = function () {
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { email, password } = formFields;
-
+  
+  const { setCurrentUser } = useContext(UserContext);
   console.log(formFields);
 
   const resetFormFields = function () {
@@ -32,11 +35,11 @@ const SignInForm = function () {
     event.preventDefault();
 
     try {
-      const response = await signInAuthUserWithEmailandPassword(
+      const { user } = await signInAuthUserWithEmailandPassword(
         email,
         password
       );
-      console.log(response);
+
       resetFormFields();
     } catch (error) {
       switch (error.code) {
@@ -47,7 +50,7 @@ const SignInForm = function () {
           alert('no user associated with this email');
           break;
         default:
-          console.log(error);
+         // console.log(error);
       }
     }
   };
