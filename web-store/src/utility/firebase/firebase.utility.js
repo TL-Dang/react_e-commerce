@@ -100,5 +100,5 @@ export const signOutUser = async function () {
 };
 
 export const onAuthStateChangedListener = function (callback) {
-  return onAuthStateChanged(auth, callback);
+  return onAuthStateChanged(auth, callback, errorCallback, copletedCallback);
 };
