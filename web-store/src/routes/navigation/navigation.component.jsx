@@ -1,5 +1,7 @@
 import { Fragment, useContext } from 'react';
 import { Outlet, Link } from 'react-router-dom';
+import CartIcon from '../../components/cart-icon/cart-icon.componet';
+import CartDropdown from '../../components/cart-dropdown/cart-dropdown.component';
 
 import { ReactComponent as CrwnLogo } from '../../assests/crown.svg';
 import { UserContext } from '../../contexts/user.context';
@@ -21,7 +23,7 @@ const Navigation = function () {
             SHOP
           </Link>
           {currentUser ? (
-            <span className='nav-link' onClick={signOutHandler}>
+            <span className='nav-link' onClick={signOutUser}>
               SIGN OUT
             </span>
           ) : (
@@ -29,7 +31,9 @@ const Navigation = function () {
               SIGN-IN
             </Link>
           )}
+          <CartIcon />
         </div>
+        <CartDropdown />
       </div>
       <Outlet />
     </Fragment>

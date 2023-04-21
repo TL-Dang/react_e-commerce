@@ -7,12 +7,17 @@ import {
   signInWithRedirect,
   signInWithPopup,
   GoogleAuthProvider,
-  signOut,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  signOut,
   onAuthStateChanged,
 } from 'firebase/auth';
-import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore';
+import {
+  getFirestore,
+  doc,
+  getDoc,
+  setDoc,
+  } from 'firebase/firestore';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -49,7 +54,7 @@ export const db = getFirestore();
 // uid, userSnapShot comes from the reference object in the console.log
 export const createUserDocumentFromAuth = async function (
   userAuth,
-  additionalInfo
+  additionalInfo = {}
 ) {
   if (!userAuth) return;
 
@@ -79,12 +84,12 @@ export const createUserDocumentFromAuth = async function (
   return userDocRef;
 };
 
-export const createAuthUserWithEmailandPassword = async function (
+export const createAuthUserWithEmailAndPassword = async function (
   email,
   password
 ) {
   if (!email || !password) return;
-  return await createUserWithEmailandPassword(auth, email, password);
+  return await createUserWithEmailAndPassword(auth, email, password);
 };
 
 export const signInAuthUserWithEmailandPassword = async function (
@@ -92,7 +97,7 @@ export const signInAuthUserWithEmailandPassword = async function (
   password
 ) {
   if (!email || !password) return;
-  return await signInUserWithEmailandPassword(auth, email, password);
+  return await signInWithEmailAndPassword(auth, email, password);
 };
 
 export const signOutUser = async function () {
@@ -100,5 +105,5 @@ export const signOutUser = async function () {
 };
 
 export const onAuthStateChangedListener = function (callback) {
-  return onAuthStateChanged(auth, callback, errorCallback, copletedCallback);
+  return onAuthStateChanged(auth, callback);
 };
