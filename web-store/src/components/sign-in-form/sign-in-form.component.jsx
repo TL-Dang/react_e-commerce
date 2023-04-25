@@ -3,7 +3,6 @@ import FormInput from '../form-input/form-input.component';
 
 import {
   signInWithGooglePopup,
-  createUserDocumentFromAuth,
   signInAuthUserWithEmailandPassword,
 } from '../../utility/firebase/firebase.utility';
 import './sign-in-form.styles.scss';
@@ -17,39 +16,25 @@ const defaultFormFields = {
 const SignInForm = function () {
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { email, password } = formFields;
-  
-  console.log(formFields);
+
+  // console.log(formFields);
 
   const resetFormFields = function () {
     setFormFields(defaultFormFields);
   };
 
-  const signInWithGoogle = async () => {
-    await createUserDocumentFromAuth(user);
-
+  const signInWithGoogle = async function () {
+    await signInWithGooglePopup();
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     try {
-      const { user } = await signInAuthUserWithEmailandPassword(
-        email,
-        password
-      );
-
+      await signInAuthUserWithEmailandPassword(email, password);
       resetFormFields();
     } catch (error) {
-      switch (error.code) {
-        case 'auth/wrong-password':
-          alert('incorrect password for email');
-          break;
-        case 'auth/user-not-found':
-          alert('no user associated with this email');
-          break;
-        default:
-         // console.log(error);
-      }
+      console.log('user sign in failed', error);
     }
   };
 
