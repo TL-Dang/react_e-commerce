@@ -1,4 +1,4 @@
-//Belows is from the firebase library. Connects firebase to web app
+//Belows is from the firebase library. Connects firebase to web app. Benefit of putting all firebase utilities on one page is for easier updating when Firebase changes how any the of the utilitys functions. 
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from 'firebase/app';
@@ -16,8 +16,12 @@ import {
   getFirestore,
   doc,
   getDoc,
+  getDocs,
   setDoc,
-  } from 'firebase/firestore';
+  collection,
+  writeBatch,
+  query,
+} from 'firebase/firestore';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -50,6 +54,36 @@ export const signInWithGoogleRedirect = function () {
   return signInWithRedirect(auth, googleProvider);
 };
 export const db = getFirestore();
+
+export const addCollectionAndDocuments = async function (
+  collectionKey,
+  objectsToAdd
+) {
+  const collectionRef = collection(db, collectionKey);
+  const batch = writeBatch(db);
+
+  objectsToAdd.forEach((object) => {
+    const docRef = doc(collectionRef, object.title.toLowerCase());
+    batch.set(docRef, object);
+  });
+
+  await batch.commit();
+  console.log('done');
+};
+
+export const getCategoriesAndDocuments = async function () {
+  const collectionRef = collection(db, 'categories');
+  const q = query(collectionRef);
+
+  const querySnapshot = await getDocs(q);
+  const categoryMap = querySnapshot.docs.reduce((acc, docSnapshot) => {
+    const { title, items } = docSnapshot.data();
+    acc[title.toLowerCase()] = items;
+    return acc;
+  }, {});
+
+  return categoryMap;
+};
 
 // uid, userSnapShot comes from the reference object in the console.log
 export const createUserDocumentFromAuth = async function (
