@@ -1,7 +1,7 @@
 # Getting Started with Create React App
 
 # react_e-commerce
-# Uses sass, react-router, react-router-dom, firebase
+# Uses sass, react-router, react-router-dom, firebase, styled components
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
