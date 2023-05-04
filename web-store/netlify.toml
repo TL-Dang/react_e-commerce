@@ -3,8 +3,8 @@
   publish = "public"
 
 [[redirects]]
-  from = "/old-url"
-  to = "/new-url"
+  from = "/*"
+  to = "index.html"
   status = 301
 
 [[headers]]
