@@ -14,12 +14,12 @@ const Shop = function () {
 
   useEffect(() => {
     const getCategoriesMap = async function () {
-      const categoriesArray = await getCategoriesAndDocuments({});
+      const categoriesArray = await getCategoriesAndDocuments('categories');
       dispatch(setCategories(categoriesArray));
     };
 
     getCategoriesMap();
-  }, []);
+  }, [dispatch]);
   return (
     <Routes>
       <Route index element={<CategoriesPreview />} />

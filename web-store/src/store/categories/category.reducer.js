@@ -6,13 +6,12 @@ export const CATEGORIES_INITIAL_STATE = {
 
 export const categoriesReducer = function (
   state = CATEGORIES_INITIAL_STATE,
-  action = {}
-) {
+  action = {}) {
   const { type, payload } = action;
 
   switch (type) {
     case CATEGORIES_ACTION_TYPES.SET_CATEGORIES:
-      return { ...state, categoriesMap: payload };
+      return { ...state, categories: payload };
     default:
       return state;
   }
