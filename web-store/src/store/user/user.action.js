@@ -1,6 +1,6 @@
-import { USER_ACTION_TYPES } from "./user.types";
-import { createAction } from "../../utility/reducer/reducer.utils";
+import { USER_ACTION_TYPES } from './user.types';
+import { createAction } from '../../utility/reducer/reducer.utils';
 
 export const setCurrentUser = function (user) {
-   dispatch(createAction(USER_ACTION_TYPES.SET_CURRENT_USER, user));
- };
+  createAction(USER_ACTION_TYPES.SET_CURRENT_USER, user);
+};
