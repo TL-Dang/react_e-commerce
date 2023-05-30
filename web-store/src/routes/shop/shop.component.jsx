@@ -13,7 +13,7 @@ const Shop = function () {
 
   useEffect(() => {
     dispatch(fetchCategoriesStartAsync());
-  }, []);
+  }, [dispatch]);
 
   return (
     <Routes>

@@ -11,14 +11,6 @@ import thunk from 'redux-thunk';
 
 import { rootReducer } from './root-reducer';
 
-const persistConfig = {
-  key: 'root',
-  storage,
-  blacklist: ['user'],
-};
-
-const persistedReducer = persistReducer(persistConfig, rootReducer);
-
 const middleWares = [
   process.env.NODE_ENV !== 'production' && logger,
   thunk,
@@ -29,6 +21,14 @@ const composeEnhancer =
     window &&
     window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) ||
   compose;
+
+const persistConfig = {
+  key: 'root',
+  storage,
+  whitelist: ['cart'],
+};
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const composedEnhancers = composeEnhancer(applyMiddleware(...middleWares));
 
