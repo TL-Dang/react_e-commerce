@@ -6,9 +6,9 @@ import Button from '../button/button.component';
 import {
   createAuthUserWithEmailAndPassword,
   createUserDocumentFromAuth,
-} from '../../utility/firebase/firebase.utility';
+} from '../../utils/firebase/firebase.utils';
 
-import './sign-up-form.styles.scss';
+import { SignUpContainer } from './sign-up-form.styles';
 
 const defaultFormFields = {
   displayName: '',
@@ -17,13 +17,11 @@ const defaultFormFields = {
   confirmPassword: '',
 };
 
-const SignUpForm = function () {
+const SignUpForm = () => {
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { displayName, email, password, confirmPassword } = formFields;
 
-  console.log(formFields);
-
-  const resetFormFields = function () {
+  const resetFormFields = () => {
     setFormFields(defaultFormFields);
   };
 
@@ -47,21 +45,21 @@ const SignUpForm = function () {
       if (error.code === 'auth/email-already-in-use') {
         alert('Cannot create user, email already in use');
       } else {
-        console.log('user creation encourtered an error', error);
+        console.log('user creation encountered an error', error);
       }
     }
   };
 
-  const handleChange = function (event) {
+  const handleChange = (event) => {
     const { name, value } = event.target;
 
     setFormFields({ ...formFields, [name]: value });
   };
 
   return (
-    <div className='sign-up-container'>
+    <SignUpContainer>
       <h2>Don't have an account?</h2>
-      <span>Sign Up with your email and password</span>
+      <span>Sign up with your email and password</span>
       <form onSubmit={handleSubmit}>
         <FormInput
           label='Display Name'
@@ -100,8 +98,6 @@ const SignUpForm = function () {
         />
         <Button type='submit'>Sign Up</Button>
       </form>
-    </div>
+    </SignUpContainer>
   );
 };
-
-export default SignUpForm;

@@ -20,6 +20,7 @@
     "reselect": "^4.1.8",
     "saga": "^4.0.0-alpha",
     "sass": "^1.59.3",
+    "styled-components": "^5.3.10",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

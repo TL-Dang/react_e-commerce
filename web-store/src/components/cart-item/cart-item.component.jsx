@@ -1,4 +1,4 @@
-import './cart-item.styles.scss';
+import './cart-item.styles.jsx';
 
 const CartItem = function ({ cartItem }) {
   const { name, quantity, imageUrl, price } = cartItem;
